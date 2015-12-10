@@ -1,0 +1,242 @@
+% \LaTeX\ beamer theme customized for the ULPGC,
+% based on different packages but initially based on the
+% \LaTeX beamer theme with ZBH style layout
+% by Sascha Steinbiss <steinbiss@zbh.uni-hamburg.de>
+% tomas.bautista@ulpgc.es
+% Apr. 16, 2015
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemeulpgc}[2015/05/16 ULPGC beamer theme]
+\RequirePackage{ifthen}
+%\RequirePackage[scaled=.85]{helvet}
+
+%\newcommand{\headertext}{
+%  University of\\
+%  Las Palmas de Gran Canaria\\
+%}
+
+\newcommand{\addresstext}{
+  University of Las Palmas de Gran Canaria\\
+  Las Palmas de G.C., Canary Is.\\[2mm]
+  \texttt{http://www.ulpgc.es/}
+}
+
+%\newboolean{@cleanbck}
+%\setboolean{@cleanbck}{false}
+\def\bckgndfileroot{ulpgc-bck}
+
+%\newboolean{@use1610}
+%\setboolean{@use1610}{false}
+%\newboolean{@use169}
+%\setboolean{@use169}{false}
+
+%\newlength{\@headerdist}
+%\setlength{\@headerdist}{5mm}
+
+\newboolean{@usespanish}
+\setboolean{@usespanish}{false}
+
+\DeclareOption{spanish}{
+%  \renewcommand{\headertext}{
+%    Universidad de\\
+%    Las Palmas de Gran Canaria\\
+%  }
+  \renewcommand{\addresstext}{
+  Universidad de Las Palmas de Gran Canaria\\
+    Las Palmas de G.C., Islas Canarias\\[1mm]
+    \texttt{http://www.ulpgc.es/}
+  }
+  \setboolean{@usespanish}{true}
+}
+
+\newboolean{@usehelvetfont}
+\setboolean{@usehelvetfont}{false}
+\DeclareOption{helvet}{
+  \setboolean{@usehelvetfont}{true}
+}
+
+%\DeclareOption{1610}{
+%  \def\backgroundfile{vorlage_uni_16_10}
+%  \setboolean{@use1610}{true}
+%}
+
+%\DeclareOption{169}{
+%  \def\backgroundfile{vorlage_uni_16_9}
+%  \setboolean{@use169}{true}
+%}
+
+\ProcessOptions
+
+\ifthenelse{\boolean{@usespanish}}{
+  \RequirePackage[english,spanish]{babel}
+  \selectlanguage{spanish}
+}{
+  \RequirePackage[spanish,english]{babel}
+  \selectlanguage{english}
+}
+
+\ifthenelse{\boolean{@usehelvetfont}}{%
+  \RequirePackage[scaled=.85]{helvet}
+}
+
+%\ifthenelse{\boolean{@use1610}}{ }
+
+%\ifthenelse{\boolean{@use169}}{
+%  \ifthenelse{\boolean{@use1610}}{
+%   \PackageError{zbhbeamertheme}{Options '1610' and '169' are mutually
+%    exclusive.}{}%
+%  } { }
+%}
+
+%\def\cleanbckgnd{%
+%  \setboolean{@cleanbck}{true}
+%}
+%\def\normalbckgnd{%
+%  \setboolean{@cleanbck}{false}
+%}
+
+%\addtolength{\hoffset}{-.23em}
+\g@addto@macro\beamer@lastminutepatches{%
+% \addtolength{\hoffset}{-.23em}
+  \addtolength{\textheight}{-3.3ex}%
+  \addtolength{\footskip}{2.5ex}
+}
+
+\mode<presentation>
+
+%\useinnertheme[shadow=true]{rounded}
+\useinnertheme{rectangles}
+%\useoutertheme{infolines}
+%\usecolortheme{wolverine}
+
+\setbeamerfont{author}{size=\normalsize}
+\setbeamerfont{date}{size=\large}
+\setbeamerfont{example text}{series=\bfseries}
+\setbeamerfont{section}{series=\bfseries}
+\colorlet{strtcolor}{blue!80!black}
+\setbeamercolor{structure}{fg=strtcolor}%
+\setbeamercolor{title}{fg=black}
+\setbeamerfont{title}{series=\bfseries}
+
+%\setbeamerfont{block title}{size={}}
+%\setbeamercolor{titlelike}{parent=structure,bg=yellow!85!orange}
+
+
+% disable navigation symbols (who uses these anyway?)
+\setbeamertemplate{navigation symbols}{}
+
+% frame
+\setbeamercolor{frametitle}{fg=white}
+\setbeamerfont{frametitle}{series=\mdseries,size=\large}
+\setbeamerfont{framesubtitle}{series=\mdseries,size=\large}
+\setbeamertemplate{frametitle}
+{
+  \ifbeamer@plainframe
+  \else
+    \textbf{\insertframetitle}
+    \vspace{.25cm}
+  \fi
+}
+
+% Title page
+\setbeamercolor{title page}{fg=white}
+\setbeamertemplate{title page}{
+  \vspace{30mm}
+  \begin{columns}
+  \begin{column}{.90\textwidth}
+  \begin{center}
+    \textbf{\Large{\inserttitle}}\\
+    \textbf{\normalsize{\insertsubtitle}}\\
+    \textbf{\footnotesize{\insertdate}}
+  \end{center}
+  \end{column}
+  \end{columns}
+  \vfill
+  \begin{columns}
+  \begin{column}{.75\textwidth}
+    \textbf{\tiny\insertauthor}\\[1mm]
+    \tiny
+    \addresstext
+  \end{column}
+% \begin{column}{.45\textwidth}
+%   \centerline{
+%     \pgfimage[height=3.5cm]{house}}
+% \end{column}
+  \end{columns}
+  \normalsize
+}
+
+% headline % Used for 'normal' slides
+\setbeamercolor{headline}{fg=white}
+\setbeamertemplate{headline}{
+  \ifbeamer@plainframe
+  \else
+%     \ifthenelse{\boolean{@use1610}}{
+%       \vspace{8.5mm}
+%       \leavevmode\tiny%
+%       \hspace*{12.25cm}
+%     }{
+%       \ifthenelse{\boolean{@use169}}{
+%         \vspace{7mm}
+%         \leavevmode\tiny%
+%         \hspace*{12.35cm}
+%       }{
+%       \vspace{8mm}
+    \ifbeamer@shrink
+       \vspace{-6mm}
+    \else
+      \vspace{6mm}
+      \leavevmode\tiny%
+      \hspace*{9.15cm}
+    \fi
+%      }
+%    }
+%   \begin{minipage}[b]{2cm}
+%     \flushright
+%     \headertext
+%   \end{minipage}
+    \normalsize
+  \fi
+}
+
+% footer with name, date and page numbers
+\setbeamercolor{footline}{fg=gray}
+\setbeamertemplate{footline}{
+  \ifbeamer@plainframe
+  \else
+    \ifnum\c@framenumber=1
+    \else
+      \leavevmode\tiny%
+      \hspace*{8mm}\vspace*{-1mm}%
+%     \makebox[4cm][l]{\insertshortauthor}%
+      \hfill\hbox{\insertshorttitle}%
+      %\makebox[4cm][l]{\insertshortdate}%
+      \hfill\insertframenumber/\inserttotalframenumber\hspace{5mm}%
+      \vspace{3.3mm}%
+    \fi
+  \fi
+}
+
+% use ULPGC slide layout template as background image
+\setbeamertemplate{background}{
+  \ifbeamer@plainframe
+  \else
+    \ifnum\c@framenumber=1
+       \includegraphics[width=\paperwidth,height=\paperheight]% 
+        {\bckgndfileroot 01}
+    \else%
+%      \hspace*{-0.2em}%
+      \ifx\beamer@frametitle\@empty
+%       \vspace*{-2cm}%
+        \includegraphics[width=\paperwidth,height=\paperheight]%
+          {\bckgndfileroot 03}
+      \else
+        \includegraphics[width=\paperwidth,height=\paperheight]%
+          {\bckgndfileroot 02}
+      \fi
+    \fi%
+  \fi
+}
+
+\mode
+<all>
